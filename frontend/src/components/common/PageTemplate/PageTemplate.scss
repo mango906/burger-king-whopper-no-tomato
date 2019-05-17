@@ -1,0 +1,11 @@
+.post-template {
+    display: flex;
+    flex-direction: column;
+    padding: 100px 400px;
+    header{
+        .header-title{
+            font-size: 50px;
+            margin: 0;
+        }
+    }
+}
