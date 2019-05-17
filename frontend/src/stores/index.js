@@ -1,7 +1,7 @@
-import ExStore from './ExStore';
+import PostStore from './PostStore';
 
 const stores = {
-  ex: new ExStore(),
+  post: new PostStore(),
 };
 
 export default stores;
