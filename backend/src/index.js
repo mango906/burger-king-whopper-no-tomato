@@ -11,6 +11,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 
+app.use('/', require('./api'));
 
 server.listen(8080, () => {
     db();
