@@ -1,0 +1,33 @@
+@import 'utils';
+
+.FakeDetail{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    .fake-header{
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid gray;
+        .fake-title{
+            font-size: 16px;
+            margin: 0;
+        }
+        .fake-desc{
+            margin-top: 12px;
+            display: flex;
+            margin-bottom: 16px;
+        }
+    }
+    .fake-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex: 1;
+    }
+}
+.gray-box{
+    display: block;
+    height: 35px;
+    border-radius: 45px;
+    background: $oc-gray-3;
+}

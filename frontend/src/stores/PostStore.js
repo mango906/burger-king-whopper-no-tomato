@@ -36,6 +36,12 @@ class PostStore {
     this.postList.unshift(data);
     this.postCount++;
   }
+  @action
+  removePost = (id) => {
+    const find = this.postList.find(post => post.id === parseInt(id));
+    this.postList.remove(find);
+    this.postCount--;
+  }
 }
 
 export default PostStore;

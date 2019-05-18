@@ -33,13 +33,16 @@ class PostDetailContainer extends Component {
           loading: false,
         })
       })
+      .catch(e => {
+        alert("존재하지 않는 글입니다");
+        this.props.store.post.removePost(id);
+        this.props.history.goBack();
+      })
   }
   render() {
     const { post, comments, loading } = this.state;
     return (
-      <div>
-        <PostDetail post={post} comments={comments} loading={loading} />
-      </div>
+      <PostDetail post={post} loading={loading} />
     );
   }
 }

@@ -1,7 +1,13 @@
 import React from 'react';
 import "./PostDetail.scss";
+import FakeDetail from '../FakeDetail/FakeDetail';
 
-const PostDetail = ({ post, comments, loading }) => {
+const PostDetail = ({ post, loading }) => {
+    if (loading) {
+        return (
+            <FakeDetail />
+        )
+    }
     return (
         <div className="PostDetail">
             <div className="post-header">
