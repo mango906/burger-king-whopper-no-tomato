@@ -1,37 +1,41 @@
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
+import axios from 'axios';
+import { SERVER } from 'config/config.json';
 
 class PostStore {
-  @observable postList = [
-    {
-      id: 1,
-      author: "서진혁",
-      title: "대한항공 마일리지 전환 이벤트 당첨자 안내",
-      content: "버거킹 와퍼에 토마토는 빼고 주세요 왜냐면 버거킹 와퍼는 토마토가 없어야 맛있거든요",
-      created: "2019.05.16",
-    },
-    {
-      id: 2,
-      author: "서진혁",
-      title: "대한항공 마일리지 전환 이벤트 당첨자 안내",
-      content: "버거킹 와퍼에 토마토는 빼고 주세요 왜냐면 버거킹 와퍼는 토마토가 없어야 맛있거든요",
-      created: "2019.05.16",
-    },
-    {
-      id: 3,
-      author: "서진혁",
-      title: "대한항공 마일리지 전환 이벤트 당첨자 안내",
-      content: "버거킹 와퍼에 토마토는 빼고 주세요 왜냐면 버거킹 와퍼는 토마토가 없어야 맛있거든요",
-      created: "2019.05.16",
-    },
-    {
-      id: 4,
-      author: "서진혁",
-      title: "대한항공 마일리지 전환 이벤트 당첨자 안내",
-      content: "버거킹 와퍼에 토마토는 빼고 주세요 왜냐면 버거킹 와퍼는 토마토가 없어야 맛있거든요",
-      created: "2019.05.16",
-    }
-  ];
-  @observable postCount = 4;
+  @observable postList = [];
+  @observable postCount;
+  @observable page = 1;
+  @observable loading = false;
+
+  @action
+  getPosts = async () => {
+    this.loading = true;
+    await axios.get(`${SERVER}/post/${this.page}`)
+      .then(res => {
+        this.postList = res.data.posts;
+        this.loading = false;
+      })
+      .catch(e => {
+        console.log(e);
+      })
+  }
+  @action
+  getCount = async () => {
+    await axios.get(`${SERVER}/post/count`)
+      .then(res => {
+        this.postCount = res.data.count;
+      })
+      .catch(e => {
+        console.log(e);
+      })
+  }
+  @action
+  addPost = ({ post }) => {
+    const { _id, __v, password, ...data } = post;
+    this.postList.unshift(data);
+    this.postCount++;
+  }
 }
 
 export default PostStore;
