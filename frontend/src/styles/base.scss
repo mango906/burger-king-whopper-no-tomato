@@ -13,6 +13,21 @@ body {
 .bold		{ font-weight: 700 }
 .bolder		{ font-weight: 800 }
 .light		{ font-weight: 300 }
+.btn {
+  outline: none;
+  border: none;
+  padding: 15px 25px;
+  font-family: 'NanumSquare', sans-serif;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+
+
+textarea{
+  font-family: 'NanumSquare', sans-serif;
+}
 
 * {
   box-sizing: inherit;
