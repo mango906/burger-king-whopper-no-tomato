@@ -1,0 +1,49 @@
+@import 'utils';
+
+.PostForm{
+    width: 100%;
+    padding: 50px 100px;
+    border: 1px solid $oc-gray-5;
+    .form-inputs{
+        .Input {
+            padding: 10px 12px;
+            font-size: 13px;
+            border: 1px solid #cecdce;
+            color: #333;
+            margin-right: 16px;
+        }
+        .title {
+            width: 100%;
+            margin-top: 16px;
+        }
+        .content {
+            line-height: 20px;
+            margin-top: 16px;
+            font-size: 16px;
+            width: 100%;
+            resize: none;
+            height: 500px;
+            overflow: auto;
+        }
+    }
+    .form-buttons{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 16px;
+        .cancel{
+            background-color: $oc-gray-7;
+            color: white;
+            margin-right: 12px;
+            &:hover{
+                background-color: $oc-gray-8;
+            }
+        }
+        .send {
+            background-color: $oc-green-7;
+            &:hover{
+                background-color: $oc-green-8;
+            }
+            color: white;
+        }
+    }
+}
