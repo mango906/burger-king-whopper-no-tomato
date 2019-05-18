@@ -36,6 +36,9 @@ class WritePost extends Component {
                 this.props.history.push("/");
             })
     }
+    componentDidMount() {
+        window.scrollTo(0, 80);
+    }
     render() {
         return (
             <WritePostForm data={this.state} onChange={this.handleChange} onCancel={this.handleCancel} onSend={this.handleSend} />
