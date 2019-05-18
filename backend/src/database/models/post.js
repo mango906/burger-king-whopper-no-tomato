@@ -49,24 +49,11 @@ Post.methods.checkPassword = function (password) {
     return this.password === resultPassword;
 };
 
-Comment.statics.create = function (id, author, content, password) {
+Post.statics.cryptoPassword = function (password) {
     const resultPassword = crypto.createHmac('sha1', secret)
         .update(password)
         .digest('base64');
-
-    return new this({
-        id,
-        author,
-        content,
-        password: resultPassword,
-    }).save();
-};
-
-Comment.methods.checkPassword = function (password) {
-    const resultPassword = crypto.createHmac('sha1', secret)
-        .update(password)
-        .digest('base64');
-    return this.password === resultPassword;
+    return resultPassword;
 };
 
 module.exports = mongoose.model('Post', Post);
