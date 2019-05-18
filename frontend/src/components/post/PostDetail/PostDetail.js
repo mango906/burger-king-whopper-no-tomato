@@ -1,8 +1,9 @@
 import React from 'react';
 import "./PostDetail.scss";
 import FakeDetail from '../FakeDetail/FakeDetail';
+import { withRouter } from 'react-router-dom';
 
-const PostDetail = ({ post, loading }) => {
+const PostDetail = ({ post, loading, history }) => {
     if (loading) {
         return (
             <FakeDetail />
@@ -12,11 +13,18 @@ const PostDetail = ({ post, loading }) => {
         <div className="PostDetail">
             <div className="post-header">
                 <h1 className="post-title">{post.title}</h1>
-                <p className="post-desc">{post.author} | {new Date(post.created).toLocaleString()}</p>
+                <div className="post-desc">
+                    <p>{post.author} | {new Date(post.created).toLocaleString()}</p>
+                    <div className="post-buttons">
+                        <button>수정</button>
+                        <button>삭제</button>
+                        <button onClick={() => { history.push("/") }}>목록으로</button>
+                    </div>
+                </div>
             </div>
             <p>{post.content}</p>
         </div>
     );
 };
 
-export default PostDetail;
+export default withRouter(PostDetail);
