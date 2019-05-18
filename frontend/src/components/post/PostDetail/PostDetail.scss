@@ -1,0 +1,16 @@
+.PostDetail{
+    display: flex;
+    flex-direction: column;
+    .post-header{
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid gray;
+        .post-title{
+            font-size: 16px;
+            margin: 0;
+        }
+        .post-desc{
+            margin: 16px 0;
+        }
+    }
+}
