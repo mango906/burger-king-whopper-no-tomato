@@ -1,6 +1,11 @@
 import React from 'react';
-import PostContainer from 'containers/PostContainer';
+import PostList from 'containers/list/PostList';
+import PageTemplate from 'components/common/PageTemplate';
 
-const HomePage = () => <PostContainer/>;
+const HomePage = () => (
+    <PageTemplate>
+        <PostList />
+    </PageTemplate>
+)
 
 export default HomePage;
