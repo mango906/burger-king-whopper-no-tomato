@@ -9,6 +9,10 @@ class PostList extends Component {
   initialize = async () => {
     const { post } = this.props.store;
     try {
+      if (post.postList.length) {
+        return;
+      }
+      await post.getCount();
       await post.getPosts();
     } catch (e) {
       console.log(e);
