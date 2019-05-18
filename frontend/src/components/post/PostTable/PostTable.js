@@ -22,7 +22,7 @@ const PostTable = ({ loading, posts }) => {
             <td className={cx('post-id')}>{post.id}</td>
             <td className={cx('post-author')}>{post.author}</td>
             <td className={cx('post-content')}>
-                <Link to={`/post/${post.id}`}>{post.title}</Link>
+                <Link to={`/post/${post.id}`}>{post.title} [{post.comments.length}]</Link>
             </td>
             <td>{
                 new Date().toLocaleDateString() === new Date(post.created).toLocaleDateString() ?

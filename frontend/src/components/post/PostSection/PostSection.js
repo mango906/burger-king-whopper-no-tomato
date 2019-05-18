@@ -8,12 +8,12 @@ const PostSection = ({ children, postCount }) => {
     return (
         <section>
             <h1 className={cx('post-count normal')}>총 {postCount}개의 글이 있습니다</h1>
-            <table className={cx('posts bold')}>
+            <table className={cx('posts normal')}>
                 <colgroup>
                     <col style={{ width: '54px' }} />
                     <col style={{ width: '175px' }} />
                     <col />
-                    <col style={{ width: '100px' }} />
+                    <col style={{ width: '150px' }} />
                 </colgroup>
                 <thead>
                     <tr>

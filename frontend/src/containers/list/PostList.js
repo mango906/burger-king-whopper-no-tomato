@@ -23,7 +23,6 @@ class PostList extends Component {
   }
   render() {
     const { post } = this.props.store;
-    console.log(post);
     return (
       <PostSection postCount={post.postCount}>
         <PostTable loading={post.loading} posts={post.postList} />
