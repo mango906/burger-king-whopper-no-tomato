@@ -20,6 +20,13 @@ class PostList extends Component {
   };
   componentDidMount() {
     this.initialize();
+    const prevScroll = sessionStorage.getItem("main-scroll");
+    if (prevScroll !== null) {
+      window.scrollTo(0, prevScroll)
+    }
+  }
+  componentWillUnmount() {
+    sessionStorage.setItem("main-scroll", window.scrollY)
   }
   render() {
     const { post } = this.props.store;
