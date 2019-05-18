@@ -18,13 +18,19 @@ const PageTemplate = ({ children, location }) => {
                 </h1>
             </header>
             {children}
-            {
-                location.pathname !== "/write" &&
-                <footer>
-                    <Link to="/write" className={cx('btn new-post')}>글 쓰기</Link>
-                </footer>
-            }
-        </div>
+            <footer>
+                <div className="buttons">
+                    {
+                        location.pathname !== "/" &&
+                        <Link to="/" className={cx('btn list')}>목록으로</Link>
+                    }
+                    {
+                        location.pathname !== "/write" &&
+                        <Link to="/write" className={cx('btn new-post')}>글 쓰기</Link>
+                    }
+                </div>
+            </footer>
+        </div >
     );
 };
 
