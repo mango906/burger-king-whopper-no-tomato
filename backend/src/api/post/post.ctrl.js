@@ -1,5 +1,18 @@
 const post = require('database/models/post');
 
+exports.count = async (req, res) => {
+    try {
+        const postCount = await post.count();
+        res.status(200).json({ count: postCount });
+    } catch (error) {
+        const result = {
+            message: '서버 에러네요 괜찮아요 원숭이들이 금방 고칠거에요',
+        };
+        console.log(error.message);
+        res.status(500).json(result);
+    }
+}
+
 exports.getPosts = async (req, res) => {
     const {
         page,
@@ -7,8 +20,8 @@ exports.getPosts = async (req, res) => {
     try {
         const posts = await post.find({},
             { '__v': false, '_id': false, 'content': false, 'password': false, 'comments.password': false })
-            .sort({ idx: -1 })
-            .limit(50)
+            .sort({ id: -1 })
+            .limit(10)
             .skip(parseInt(page - 1, 10) * 5);
         if (posts.length) {
             res.status(200).json({
@@ -36,6 +49,9 @@ exports.viewPost = async (req, res) => {
     try {
         const view = await post.findOne({ id }, { '__v': false, '_id': false, 'password': false, 'comments.password': false });
         if (view) {
+            view.comments.sort(function (a, b) {
+                return a.created - b.created;
+            })
             res.status(200).json({
                 message: '오홍홍 조와용',
                 view
