@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import axios from 'axios';
 import { SERVER } from 'config/config.json';
 
@@ -7,6 +7,7 @@ class PostStore {
   @observable postCount;
   @observable page = 1;
   @observable loading = false;
+  @observable viewComments = [];
 
   @action
   getPosts = async () => {
@@ -31,6 +32,11 @@ class PostStore {
       })
   }
   @action
+  setViewComments = (comments) => {
+    this.viewComments = comments;
+    console.log(toJS(this.viewComments));
+  }
+  @action
   addPost = ({ post }) => {
     const { _id, __v, password, ...data } = post;
     this.postList.unshift(data);
@@ -41,6 +47,10 @@ class PostStore {
     const find = this.postList.find(post => post.id === parseInt(id));
     this.postList.remove(find);
     this.postCount--;
+  }
+  @action
+  updateViewComments = (data) => {
+    this.viewComments = [...this.viewComments, data];
   }
 }
 

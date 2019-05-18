@@ -1,0 +1,21 @@
+.Comment{
+    display: flex;
+    align-items: center;
+    .comment-author{
+        display: flex;
+        max-width: 120px;
+        flex: 2;
+    }
+    .comment-content{
+        flex: 6;
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+    .comment-created{
+        margin-right: 12px;
+        flex: 2;
+    }
+    button{
+        height: 20px;
+    }
+}

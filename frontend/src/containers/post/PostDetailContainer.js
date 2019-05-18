@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { SERVER } from 'config/config.json';
 import PostDetail from 'components/post/PostDetail';
+import CommentTemplate from 'containers/post/CommentTemplate';
 
 @inject('store')
 @observer
@@ -13,7 +14,6 @@ class PostDetailContainer extends Component {
     this.state = {
       loading: false,
       post: {},
-      comments: []
     }
   }
   componentDidMount() {
@@ -27,9 +27,9 @@ class PostDetailContainer extends Component {
     await axios.get(`${SERVER}/post/view/${id}`)
       .then(res => {
         const { comments, ...post } = res.data.view;
+        this.props.store.post.setViewComments(comments);
         this.setState({
           post,
-          comments,
           loading: false,
         })
       })
@@ -38,11 +38,15 @@ class PostDetailContainer extends Component {
         this.props.store.post.removePost(id);
         this.props.history.goBack();
       })
+    window.scrollTo(0, 0);
   }
   render() {
-    const { post, comments, loading } = this.state;
+    const { post, loading } = this.state;
     return (
-      <PostDetail post={post} loading={loading} />
+      <>
+        <PostDetail post={post} loading={loading} />
+        <CommentTemplate postId={post.id} />
+      </>
     );
   }
 }
