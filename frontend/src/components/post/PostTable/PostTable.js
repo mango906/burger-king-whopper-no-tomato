@@ -4,7 +4,6 @@ import classNames from 'classnames/bind';
 import FakePost from '../FakePost';
 import { Link } from 'react-router-dom';
 import createArray from 'lib/createArray';
-import FullscreenLoader from 'components/common/FullScreenLoader';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +23,7 @@ const PostTable = ({ loading, posts }) => {
             <td className={cx('post-content')}>
                 <Link to={`/post/${post.id}`}>{post.title} [{post.comments.length}]</Link>
             </td>
-            <td>{
+            <td className={cx('post-created')}>{
                 new Date().toLocaleDateString() === new Date(post.created).toLocaleDateString() ?
                     new Date(post.created).toLocaleTimeString()
                     :
