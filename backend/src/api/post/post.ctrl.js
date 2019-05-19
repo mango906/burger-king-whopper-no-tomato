@@ -22,7 +22,7 @@ exports.getPosts = async (req, res) => {
             { '__v': false, '_id': false, 'content': false, 'password': false, 'comments.password': false })
             .sort({ id: -1 })
             .limit(10)
-            .skip(parseInt(page - 1, 10) * 5);
+            .skip(parseInt(page - 1, 10) * 10);
         if (posts.length) {
             res.status(200).json({
                 message: '오홍홍 좋아용',
