@@ -41,9 +41,9 @@ class PostStore {
   @action
   addPost = ({ post }) => {
     const { _id, __v, password, ...data } = post;
-    this.postList.pop();
     this.postList.unshift(data);
     this.postCount++;
+    this.postList.length > 10 && this.postList.pop();
   }
   @action
   removePost = (id) => {
