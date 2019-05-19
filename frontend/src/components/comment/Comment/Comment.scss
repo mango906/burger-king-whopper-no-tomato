@@ -1,6 +1,7 @@
 .Comment{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
     .comment-author{
         display: flex;
         max-width: 120px;
@@ -17,6 +18,7 @@
         text-align: center;
     }
     button{
+        margin: 16px 0;
         height: 20px;
     }
 }

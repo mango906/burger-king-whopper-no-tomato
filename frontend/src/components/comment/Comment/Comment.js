@@ -5,7 +5,7 @@ const Comment = ({ data }) => {
     return (
         <li className="Comment">
             <p className="comment-author">{data.author}</p>
-            <p className="comment-content">{data.content}</p>
+            <pre className="comment-content">{data.content.replace(/\n$/gm, '')}</pre>
             <p className="comment-created">{new Date(data.created).toLocaleString()}</p>
             <button>X</button>
         </li>
