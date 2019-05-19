@@ -3,10 +3,10 @@ import styles from './PostTable.scss';
 import classNames from 'classnames/bind';
 import FakePost from '../FakePost';
 import { Link } from 'react-router-dom';
+import createArray from 'lib/createArray';
+import FullscreenLoader from 'components/common/FullScreenLoader';
 
 const cx = classNames.bind(styles);
-
-const createArray = length => Array.from(Array(length).keys());
 
 const PostTable = ({ loading, posts }) => {
     if (loading) {
