@@ -27,11 +27,11 @@ $ yarn
 데이터베이스를 실행합니다
 
 ```bash
-mongod --setParameter failIndexKeyTooLong=false
+$ mongod --setParameter failIndexKeyTooLong=false
 ```
 backend 디렉터리로 이동해 개발 서버를 실행합니다.
 ```bash
-yarn start:dev
+$ yarn start:dev
 ```
 
 ### 프론트엔드 개발 서버 가동
@@ -39,5 +39,5 @@ yarn start:dev
 frontend 디렉터리로 이동해 개발 서버를 실행합니다.
 
 ```bash
-yarn start
+$ yarn start
 ```
