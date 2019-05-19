@@ -25,8 +25,9 @@ class WritePost extends Component {
     cancel && this.props.history.goBack();
   }
   handleSend = async () => {
-    const { author, title, password, content } = this.state;
-    if (!author || !title || !password || !content) {
+    const { author, title, content } = this.state;
+    const nullReg = /(\s*)/g;
+    if (!author.replace(nullReg, "") || !title.replace(nullReg, "") || !content.replace(nullReg, "")) {
       alert("내용을 모두 작성해주세요");
       return;
     }

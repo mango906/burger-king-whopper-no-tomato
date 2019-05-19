@@ -24,6 +24,12 @@ class CommentTemplate extends Component {
     })
   }
   handleSend = async () => {
+    const { author, content } = this.state;
+    const nullReg = /(\s*)/g;
+    if (!author.replace(nullReg, "") || !content.replace(nullReg, "")) {
+      alert("양식을 전부 채워주세요");
+      return;
+    }
     const { postId } = this.props;
     const { loading, comments, ...data } = this.state;
     this.setState({
