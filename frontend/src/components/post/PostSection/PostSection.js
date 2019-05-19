@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from './PostSection.scss';
 import classNames from 'classnames/bind';
+import createArray from 'lib/createArray';
 
 const cx = classNames.bind(styles);
 
-const PostSection = ({ children, postCount }) => {
+const PostSection = ({ children, postCount, onPageMove }) => {
+    const pageCount = postCount ? Math.ceil(postCount / 10) : 1;
     return (
         <section>
             <h1 className={cx('post-count normal')}>총 {postCount}개의 글이 있습니다</h1>
@@ -25,6 +27,11 @@ const PostSection = ({ children, postCount }) => {
                 </thead>
                 {children}
             </table>
+            {
+                createArray(pageCount).map(e => {
+                    return <button key={e} onClick={() => { onPageMove(e + 1) }}>{e + 1}</button>
+                })
+            }
         </section>
     );
 };

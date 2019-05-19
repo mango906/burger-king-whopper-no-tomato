@@ -31,7 +31,7 @@ class PostList extends Component {
   render() {
     const { post } = this.props.store;
     return (
-      <PostSection postCount={post.postCount}>
+      <PostSection postCount={post.postCount} onPageMove={post.movePage}>
         <PostTable loading={post.loading} posts={post.postList} />
       </PostSection>
     );
