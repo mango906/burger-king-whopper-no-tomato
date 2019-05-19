@@ -22,7 +22,7 @@ const PostDetail = ({ post, loading, history }) => {
                     </div>
                 </div>
             </div>
-            <p>{post.content}</p>
+            <pre>{post.content}</pre>
         </div>
     );
 };
