@@ -8,6 +8,7 @@ class PostStore {
   @observable page = 1;
   @observable loading = false;
   @observable viewComments = [];
+  @observable apiCall = false;
 
   @action
   getPosts = async () => {
@@ -16,6 +17,7 @@ class PostStore {
       .then(res => {
         this.postList = res.data.posts;
         this.loading = false;
+        this.apiCall = true;
       })
       .catch(e => {
         console.log(e);
@@ -39,6 +41,7 @@ class PostStore {
   @action
   addPost = ({ post }) => {
     const { _id, __v, password, ...data } = post;
+    this.postList.pop();
     this.postList.unshift(data);
     this.postCount++;
   }
@@ -49,8 +52,20 @@ class PostStore {
     this.postCount--;
   }
   @action
-  updateViewComments = (data) => {
+  updateViewComments = (data, postId) => {
+    if (this.apiCall) {
+      const find = this.postList.find(post => post.id === postId);
+      find.comments.push(data);
+    }
     this.viewComments = [...this.viewComments, data];
+  }
+  @action
+  movePage = async (page) => {
+    if (this.page === page) {
+      return;
+    }
+    this.page = page;
+    await this.getPosts();
   }
 }
 
