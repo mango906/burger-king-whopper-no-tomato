@@ -1,12 +1,11 @@
 import React from 'react';
+import Pagination from "react-js-pagination";
 import styles from './PostSection.scss';
 import classNames from 'classnames/bind';
-import createArray from 'lib/createArray';
 
 const cx = classNames.bind(styles);
 
-const PostSection = ({ children, postCount, onPageMove }) => {
-  const pageCount = postCount ? Math.ceil(postCount / 10) : 1;
+const PostSection = ({ children, postCount, onPageMove, page }) => {
   return (
     <section>
       <h1 className={cx('post-count normal')}>총 {postCount}개의 글이 있습니다</h1>
@@ -27,21 +26,20 @@ const PostSection = ({ children, postCount, onPageMove }) => {
         </thead>
         {children}
       </table>
-      {
-        createArray(pageCount).map(e => {
-          return (
-            <button
-              key={e}
-              onClick={() => {
-                onPageMove(e + 1);
-                window.scrollTo(0, 300);
-              }}
-            >
-              {e + 1}
-            </button>
-          )
-        })
-      }
+      <Pagination
+          activePage={page}
+          itemsCountPerPage={10}
+          totalItemsCount={postCount}
+          pageRangeDisplayed={5}
+          onChange={(page) => {
+            onPageMove(page);
+            window.scrollTo(0,300);
+          }}
+          itemClass="page-btn"
+          activeClass="select"
+          innerClass="Pagination"
+          disabledClass="disable"
+      />
     </section>
   );
 };
