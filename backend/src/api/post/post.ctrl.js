@@ -23,16 +23,10 @@ exports.getPosts = async (req, res) => {
             .sort({ id: -1 })
             .limit(10)
             .skip(parseInt(page - 1, 10) * 10);
-        if (posts.length) {
-            res.status(200).json({
-                message: '오홍홍 좋아용',
-                posts,
-            });
-        } else {
-            res.status(404).json({
-                message: '글이 없어요',
-            });
-        }
+        res.status(200).json({
+            message: '오홍홍 좋아용',
+            posts,
+        });
     } catch (error) {
         const result = {
             message: '서버 에러네요 괜찮아요 원숭이들이 금방 고칠거에요',
