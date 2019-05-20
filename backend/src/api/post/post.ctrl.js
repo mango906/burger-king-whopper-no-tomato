@@ -97,3 +97,37 @@ exports.createPost = async (req, res) => {
         res.status(500).json(result);
     }
 };
+
+exports.deletePost = async (req, res) => {
+    const {
+        id,
+        password
+    } = req.params;
+    try {
+        const find = await post.findOne({id});
+        if(!find){
+            const result = {
+                message: '해당 idx의 대기 글이 없어요',
+            };
+            res.status(404).json(result);
+            return;
+        }
+        if(!find.checkPassword(password)){
+            const result = {
+                message: '패스워드가 틀립니다',
+            };
+            res.status(401).json(result);
+            return;
+        }
+        await post.deleteOne({id});
+        res.status(200).json({
+            message: '오홍홍 좋아용'
+        })
+    } catch(error) {
+        const result = {
+            message: '서버 에러네요 괜찮아요 원숭이들이 금방 고칠거에요',
+        };
+        console.log(error.message);
+        res.status(500).json(result);
+    }
+}
