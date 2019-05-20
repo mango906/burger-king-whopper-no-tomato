@@ -41,3 +41,5 @@ frontend 디렉터리로 이동해 개발 서버를 실행합니다.
 ```bash
 $ yarn start
 ```
+
+브라우저를 열고 http://localhost:3000/ 로 접속하면 사용할 수 있습니다.
