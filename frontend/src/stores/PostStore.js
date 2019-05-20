@@ -7,6 +7,7 @@ class PostStore {
   @observable postCount;
   @observable page = 1;
   @observable loading = false;
+  @observable viewPost = {};
   @observable viewComments = [];
   @observable apiCall = false;
 
@@ -34,9 +35,10 @@ class PostStore {
       })
   }
   @action
-  setViewComments = (comments) => {
-    this.viewComments = comments;
-    console.log(toJS(this.viewComments));
+  setViewContent = async (data) => {
+   const { comments, ...post } = data;
+   this.viewComments = comments;
+   this.viewPost = post;
   }
   @action
   addPost = ({ post }) => {
@@ -46,10 +48,40 @@ class PostStore {
     this.postList.length > 10 && this.postList.pop();
   }
   @action
-  removePost = (id) => {
-    const find = this.postList.find(post => post.id === parseInt(id));
-    this.postList.remove(find);
-    this.postCount--;
+  removePost = async (password) => {
+    const { id } = this.viewPost;
+    try{
+      await axios.delete(`${SERVER}/post/${id}/${password}`);
+      this.removePostToList(id);
+      return true;
+    }catch(e){
+      console.log(e);
+      return false;
+    }
+  }
+  @action
+  removeComment = async (password, commentId) => {
+    const { id } = this.viewPost;
+    try {
+      await axios.delete(`${SERVER}/comment/${id}/${commentId}/${password}`)
+      this.viewComments = this.viewComments.filter(comment => comment.id !== commentId);
+      if (this.apiCall) {
+        const find = this.postList.find(post => post.id === id);
+        find.comments.pop();
+      }
+      return true;
+    } catch(e) {
+      return false;
+    };
+  }
+  @action
+  removePostToList = async (id) => {
+    if(this.apiCall){
+      const find = this.postList.find(post => post.id === parseInt(id));
+      this.postList.remove(find);
+      this.postCount--;
+      await this.getPosts();
+    }
   }
   @action
   updateViewComments = (data, postId) => {
