@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CommentSection from 'components/comment/CommentSection';
-import CommentList from 'components/comment/CommentList';
 import FullScreenLoader from 'components/common/FullScreenLoader';
 import { inject, observer } from 'mobx-react';
 import axios from 'axios';
@@ -8,7 +7,7 @@ import { SERVER } from 'config/config.json';
 
 @inject('store')
 @observer
-class CommentTemplate extends Component {
+class WriteComment extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,8 +18,13 @@ class CommentTemplate extends Component {
     }
   }
   handleChange = (e) => {
+    const targetName = e.target.name;
+    const rows = e.target.value.split('\n').length;
+    if(rows > 15){
+      return;
+    }
     this.setState({
-      [e.target.name]: e.target.value,
+      [targetName]: e.target.value
     })
   }
   handleSend = async () => {
@@ -55,14 +59,13 @@ class CommentTemplate extends Component {
   }
   render() {
     const { loading, ...data } = this.state;
-    const { viewComments } = this.props.store.post;
     return (
-      <CommentSection data={data} onChange={this.handleChange} onSend={this.handleSend}>
-        <CommentList comments={viewComments} />
+      <>
+        <CommentSection data={data} onChange={this.handleChange} onSend={this.handleSend}/>
         {loading && <FullScreenLoader />}
-      </CommentSection>
+      </>
     );
   }
 }
 
-export default CommentTemplate;
+export default WriteComment;

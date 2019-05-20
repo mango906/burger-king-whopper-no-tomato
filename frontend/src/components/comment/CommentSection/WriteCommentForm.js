@@ -1,10 +1,9 @@
 import React from 'react';
-import "./CommentSection.scss";
+import "./WriteCommentForm.scss";
 
-const CommentSection = ({ data, children, onChange, onSend }) => {
+const WriteCommentForm = ({ data, onChange, onSend }) => {
     return (
-        <div className="CommentSection">
-            {children}
+        <div className="WriteCommentForm">
             <div className="new-comment">
                 <div className="new-comment-desc">
                     <input className="Input" placeholder="닉네임" maxLength="20" value={data.author} onChange={onChange} name="author" autoComplete="off" />
@@ -17,4 +16,4 @@ const CommentSection = ({ data, children, onChange, onSend }) => {
     );
 };
 
-export default CommentSection;
+export default WriteCommentForm;
