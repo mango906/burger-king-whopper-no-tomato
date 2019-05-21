@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CommentSection from 'components/comment/CommentSection';
+import WriteCommentForm from 'components/comment/WriteCommentForm';
 import FullScreenLoader from 'components/common/FullScreenLoader';
 import { inject, observer } from 'mobx-react';
 import axios from 'axios';
@@ -61,7 +61,7 @@ class WriteComment extends Component {
     const { loading, ...data } = this.state;
     return (
       <>
-        <CommentSection data={data} onChange={this.handleChange} onSend={this.handleSend}/>
+        <WriteCommentForm data={data} onChange={this.handleChange} onSend={this.handleSend}/>
         {loading && <FullScreenLoader />}
       </>
     );
