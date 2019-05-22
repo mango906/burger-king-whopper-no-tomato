@@ -152,5 +152,8 @@
         }
       ]
     ]
+  },
+  "devDependencies": {
+    "cypress": "^3.3.0"
   }
 }
