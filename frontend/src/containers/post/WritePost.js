@@ -38,18 +38,27 @@ class WritePost extends Component {
     this.setState({
       loading: true
     });
-    await axios.post(`${SERVER}/post`, this.state).then(async res => {
-      const { post } = this.props.store;
-      if (post.apiCall) {
-        post.addPost(res.data);
-      }
-      this.setState({
-        loading: false
+    await axios
+      .post(`${SERVER}/post`, this.state)
+      .then(async res => {
+        const { post } = this.props.store;
+        if (post.apiCall) {
+          post.addPost(res.data);
+        }
+        this.setState({
+          loading: false
+        });
+        sessionStorage.setItem("main-scroll", 0);
+        alert("작성에 성공하였습니다.");
+        this.props.history.push("/");
+      })
+      .catch(e => {
+        console.log(e);
+        this.setState({
+          loading: false
+        });
+        alert("작성 중 오류가 발생하였습니다");
       });
-      sessionStorage.setItem("main-scroll", 0);
-      alert("작성에 성공하였습니다.");
-      this.props.history.push("/");
-    });
   };
   componentDidMount() {
     window.scrollTo(0, 80);
