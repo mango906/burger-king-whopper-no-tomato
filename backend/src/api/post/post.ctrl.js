@@ -48,7 +48,14 @@ exports.viewPost = async (req, res) => {
   try {
     const view = await post.findOne(
       { id },
-      { __v: false, _id: false, password: false, "comments.password": false }
+      {
+        __v: false,
+        _id: false,
+        password: false,
+        "comments.password": false,
+        "comments.recomments.password": false,
+        "comments.recomments._id": false
+      }
     );
     if (view) {
       view.comments.sort(function(a, b) {
