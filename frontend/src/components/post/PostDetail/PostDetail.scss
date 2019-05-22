@@ -1,37 +1,61 @@
-.PostDetail{
+@import "utils";
+
+.PostDetail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-bottom: 1px solid black;
+  min-height: 400px;
+  .post-header {
     display: flex;
     flex-direction: column;
-    flex: 1;
-    border-bottom: 1px solid black;
-    min-height: 400px;
-    .post-header{
-        display: flex;
-        flex-direction: column;
-        border-bottom: 1px solid gray;
-        .post-title{
-            font-size: 20px;
-            margin: 0;
-            word-wrap: break-word;
-            word-break: break-all;
-        }
-        .post-desc{
-            display: flex;
-            margin: 16px 0;
-            width: auto;
-            .post-buttons{
-                display: flex;
-                margin-left: auto;
-                button{
-                    margin-right: 12px;
-                    border: none;
-                    outline: none;
-                    height: auto;
-                    cursor: pointer;
-                    font-size: 12px;
-                    padding: 0 20px;
-                    border-radius: 5px;
-                }
-            }
-        }   
+    border-bottom: 1px solid gray;
+    .post-title {
+      font-size: 20px;
+      margin: 0;
+      word-wrap: break-word;
+      word-break: break-all;
     }
+    .post-desc {
+      display: flex;
+      margin: 16px 0;
+      width: auto;
+      .post-buttons {
+        display: flex;
+        margin-left: auto;
+        .btn {
+          margin-right: 12px;
+          border: none;
+          outline: none;
+          height: 100%;
+          cursor: pointer;
+          font-size: 14px;
+          padding: 0 20px;
+          border-radius: 5px;
+          color: white;
+        }
+        .edit {
+          background-color: $oc-indigo-3;
+          &:hover,
+          &:focus {
+            background-color: $oc-indigo-4;
+          }
+        }
+        .remove {
+          background-color: $oc-red-7;
+          &:hover,
+          &:focus {
+            background-color: $oc-red-8;
+          }
+        }
+        .list {
+          background-color: $oc-lime-4;
+          &:hover,
+          &:focus {
+            background-color: $oc-lime-5;
+          }
+        }
+      }
+    }
+  }
 }
