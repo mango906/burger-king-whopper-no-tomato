@@ -1,4 +1,5 @@
 const post = require("database/models/post");
+const dropIndex = require("lib/dropIndexes");
 
 exports.count = async (req, res) => {
   try {
@@ -94,6 +95,7 @@ exports.createPost = async (req, res) => {
       console.log(lastPost);
       id = lastPost.id + 1;
     }
+    dropIndex();
     const newPost = await post.create(id, author, title, content, password);
     res.status(200).json({
       message: "오홍홍 좋아용",
