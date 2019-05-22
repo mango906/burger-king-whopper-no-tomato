@@ -23,6 +23,7 @@ exports.createComment = async (req, res) => {
     };
     find.comments.unshift(newComment);
     find.save();
+    delete newComment.password;
     res.status(200).json({
       message: "오홍홍 좋아용",
       comment: newComment
@@ -117,5 +118,49 @@ exports.createRecomment = async (req, res) => {
     };
     console.log(error.message);
     res.status(500).json(result);
+  }
+};
+
+exports.deleteRecomment = async (req, res) => {
+  const { postId, commentId, recommentId, password } = req.params;
+  try {
+    const find = await post.findOne({ id: postId });
+    if (!find) {
+      res.status(404).json({
+        message: "글이 없어요"
+      });
+      return;
+    }
+    const findComment = find.comments.find(
+      comment => comment.id === parseInt(commentId)
+    );
+    if (!findComment) {
+      res.status(404).json({
+        message: "글이 없어요"
+      });
+      return;
+    }
+    const findRecomment = findComment.recomments.find(
+      recomment => recomment.id === parseInt(recommentId)
+    );
+    if (!findRecomment) {
+      res.status(404).json({
+        message: "글이 없어요"
+      });
+      return;
+    }
+    if (post.cryptoPassword(password) !== findRecomment.password) {
+      res.status(401).json({
+        message: "비밀 번호가 틀렸어요"
+      });
+      return;
+    }
+    findComment.recomments.remove(findRecomment);
+    await find.save();
+    res.status(200).json({
+      message: "오홍홍 좋아용"
+    });
+  } catch (e) {
+    console.log(e);
   }
 };
