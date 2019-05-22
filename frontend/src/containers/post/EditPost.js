@@ -117,6 +117,7 @@ class EditPost extends Component {
             value={password}
             onChange={this.handleChange}
             onCheck={this.handleCheck}
+            onCancel={this.handleCancel}
           />
         )}
         {loading && <FullscreenLoader />}

@@ -1,7 +1,7 @@
-import React from 'react';
-import './CheckPassword.scss';
+import React from "react";
+import "./CheckPassword.scss";
 
-const CheckPassword = ({onChange, onCheck, value}) => {
+const CheckPassword = ({ onChange, onCheck, onCancel, value }) => {
   return (
     <div className="CheckPassword">
       <div className="check-form">
@@ -15,8 +15,12 @@ const CheckPassword = ({onChange, onCheck, value}) => {
           value={value}
         />
         <div className="form-buttons">
-          <button className="cancel">취소</button>
-          <button className="check" onClick={onCheck}>확인</button>
+          <button className="cancel" onClick={onCancel}>
+            취소
+          </button>
+          <button className="check" onClick={onCheck}>
+            확인
+          </button>
         </div>
       </div>
     </div>
