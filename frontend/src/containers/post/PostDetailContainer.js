@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
-import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-import { SERVER } from 'config/config.json';
-import PostDetail from 'components/post/PostDetail';
-import WriteComment from 'containers/comment/WriteComment';
-import CommentList from 'components/comment/CommentList';
+import React, { Component } from "react";
+import { inject, observer } from "mobx-react";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
+import { SERVER } from "config/config.json";
+import PostDetail from "components/post/PostDetail";
+import WriteComment from "containers/comment/WriteComment";
+import CommentList from "components/comment/CommentList";
 
-@inject('store')
+@inject("store")
 @observer
 class PostDetailContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: false,
-      post: {},
-    }
+      post: {}
+    };
   }
   componentDidMount() {
     this.initialize();
@@ -23,58 +23,80 @@ class PostDetailContainer extends Component {
   initialize = async () => {
     const { id } = this.props.match.params;
     this.setState({
-      loading: true,
-    })
-    await axios.get(`${SERVER}/post/view/${id}`)
+      loading: true
+    });
+    await axios
+      .get(`${SERVER}/post/view/${id}`)
       .then(res => {
         const { view } = res.data;
         this.props.store.post.setViewContent(view);
         this.setState({
-          loading: false,
-        })
+          loading: false
+        });
       })
-      .catch( _ => {
+      .catch(_ => {
         alert("존재하지 않는 글입니다");
         this.props.store.post.removePostToList(id);
         this.props.history.goBack();
-      })
+      });
     window.scrollTo(0, 0);
-  }
+  };
   handleRemovePost = async () => {
     const password = prompt("비밀 번호를 입력하세요");
-    if(password === null){
+    if (password === null) {
       return;
     }
     const res = await this.props.store.post.removePost(password);
-    if(res){
+    if (res) {
       alert("삭제에 성공했습니다");
       this.props.history.push("/");
-    }else {
+    } else {
       alert("삭제에 실패하였습니다");
     }
-  }
-  handleRemoveComment = async (id) => {
+  };
+  handleRemoveComment = async id => {
     const password = prompt("비밀 번호를 입력하세요");
-    if(password === null){
+    if (password === null) {
       return;
     }
     const res = await this.props.store.post.removeComment(password, id);
-    if(!res) {
+    if (!res) {
       alert("비밀 번호가 틀렸습니다");
     }
-  }
+  };
+  handleRemoveRecomment = async (commentId, recommentId) => {
+    const password = prompt("비밀 번호를 입력하세요");
+    if (password === null) {
+      return;
+    }
+    const res = await this.props.store.post.removeRecomment(
+      password,
+      commentId,
+      recommentId
+    );
+    if (!res) {
+      alert("비밀 번호가 틀립니다");
+    }
+  };
   render() {
     const { loading } = this.state;
     const { viewPost, viewComments } = this.props.store.post;
     return (
       <>
-        <PostDetail post={viewPost} loading={loading} onRemove={this.handleRemovePost}/>
-        <CommentList comments={viewComments} onRemove={this.handleRemoveComment}/>
-        <WriteComment postId={viewPost.id} />
+        <PostDetail
+          post={viewPost}
+          loading={loading}
+          onRemove={this.handleRemovePost}
+        />
+        <CommentList
+          comments={viewComments}
+          onRemove={this.handleRemoveComment}
+          onRemoveRecomment={this.handleRemoveRecomment}
+        />
+        <WriteComment postId={viewPost.id} type="comment" />
       </>
     );
   }
 }
-
 
 export default withRouter(PostDetailContainer);

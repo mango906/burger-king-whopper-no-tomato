@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import WriteCommentForm from 'components/comment/WriteCommentForm';
-import FullScreenLoader from 'components/common/FullScreenLoader';
-import { inject, observer } from 'mobx-react';
-import axios from 'axios';
-import { SERVER } from 'config/config.json';
+import React, { Component } from "react";
+import WriteCommentForm from "components/comment/WriteCommentForm";
+import FullScreenLoader from "components/common/FullScreenLoader";
+import { inject, observer } from "mobx-react";
+import axios from "axios";
+import { SERVER } from "config/config.json";
 
-@inject('store')
+@inject("store")
 @observer
 class WriteComment extends Component {
   constructor(props) {
@@ -15,53 +15,71 @@ class WriteComment extends Component {
       author: "",
       password: "",
       content: ""
-    }
+    };
   }
-  handleChange = (e) => {
+  handleChange = e => {
     const targetName = e.target.name;
-    const rows = e.target.value.split('\n').length;
-    if(rows > 15){
+    const rows = e.target.value.split("\n").length;
+    if (rows > 15) {
       return;
     }
     this.setState({
       [targetName]: e.target.value
-    })
-  }
-  handleSend = async () => {
+    });
+  };
+  handleSubmit = async () => {
     const { author, content } = this.state;
+    const { type, commentId } = this.props;
     const nullReg = /(\s*)/g;
     if (!author.replace(nullReg, "") || !content.replace(nullReg, "")) {
       alert("양식을 전부 채워주세요");
       return;
     }
-    const { postId } = this.props;
+    const { id: postId } = this.props.store.post.viewPost;
     const { loading, comments, ...data } = this.state;
     this.setState({
       loading: true
-    })
-    await axios.post(`${SERVER}/comment/${postId}`, data)
+    });
+    let url = `${SERVER}/comment/${postId}`;
+    if (type === "recomment") {
+      url += `/${this.props.commentId}`;
+    }
+    console.log(url);
+    await axios
+      .post(url, data)
       .then(res => {
         const { comment } = res.data;
-        this.props.store.post.updateViewComments(comment, postId);
+        console.log(type);
+        if (type === "comment") {
+          this.props.store.post.updateViewComments(comment, postId);
+        } else if (type === "recomment") {
+          this.props.store.post.addRecommentToViewComments(comment, commentId);
+        }
         this.setState({
           loading: false,
           author: "",
           password: "",
           content: ""
-        })
+        });
       })
       .catch(e => {
+        console.log(e);
         alert("댓글 작성에 실패하였습니다");
         this.setState({
           loading: false
-        })
-      })
-  }
+        });
+      });
+  };
   render() {
     const { loading, ...data } = this.state;
     return (
       <>
-        <WriteCommentForm data={data} onChange={this.handleChange} onSend={this.handleSend}/>
+        <WriteCommentForm
+          data={data}
+          onChange={this.handleChange}
+          onSend={this.handleSubmit}
+          type={this.props.type}
+        />
         {loading && <FullScreenLoader />}
       </>
     );

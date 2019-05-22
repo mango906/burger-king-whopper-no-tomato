@@ -79,6 +79,27 @@ class PostStore {
     }
   };
   @action
+  removeRecomment = async (password, commentId, recommentId) => {
+    const { id } = this.viewPost;
+    try {
+      await axios.delete(
+        `${SERVER}/comment/${id}/${commentId}/${recommentId}/${password}`
+      );
+      const findComment = this.viewComments.find(
+        comment => comment.id === commentId
+      );
+      const findRecomment = findComment.recomments.find(
+        recomment => recomment.id === recommentId
+      );
+      findComment.recomments.remove(findRecomment);
+      this.viewComments = [...this.viewComments];
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  };
+  @action
   removePostToList = async id => {
     if (this.apiCall) {
       const find = this.postList.find(post => post.id === parseInt(id));
@@ -109,6 +130,20 @@ class PostStore {
       const find = this.postList.find(e => e.id === post.id);
       find.title = post.title;
     }
+  };
+  @action
+  addRecommentToViewComments = (data, commentId) => {
+    const find = this.viewComments.find(comment => comment.id === commentId);
+    const recomment = {
+      ...data,
+      created: new Date().toISOString()
+    };
+    if (find.recomments) {
+      find.recomments.push(recomment);
+    } else {
+      find.recomments = [recomment];
+    }
+    this.viewComments = [...this.viewComments];
   };
 }
 

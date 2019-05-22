@@ -1,21 +1,26 @@
-.Comment-wrapper {
-  list-style-type: none;
-}
+@import "utils";
 
-.Comment {
+.Recomment {
+  margin-top: 5px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  cursor: pointer;
-  .comment-author {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  padding: 0 12px;
+  .recomment-simbol {
+    margin-top: 12px;
+    margin-right: 5px;
+  }
+  .recomment-author {
     display: flex;
     max-width: 120px;
     flex: 2;
   }
-  .comment-content {
+  .recomment-content {
     flex: 6;
   }
-  .comment-created {
+  .recomment-created {
     margin-right: 12px;
     flex: 2;
     text-align: center;
@@ -24,7 +29,4 @@
     margin: 16px 0;
     height: 20px;
   }
-}
-.recomment-wrapper {
-  padding-left: 16px;
 }
