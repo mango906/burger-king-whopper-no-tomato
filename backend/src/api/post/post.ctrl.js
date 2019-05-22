@@ -95,7 +95,16 @@ exports.createPost = async (req, res) => {
       console.log(lastPost);
       id = lastPost.id + 1;
     }
-    dropIndex();
+    await post.collection
+      .getIndexes()
+      .then(async res => {
+        console.log(res);
+        await dropIndex();
+      })
+      .catch(e => {
+        console.log(e);
+        return;
+      });
     const newPost = await post.create(id, author, title, content, password);
     res.status(200).json({
       message: "오홍홍 좋아용",
