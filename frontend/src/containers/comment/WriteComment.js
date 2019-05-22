@@ -64,7 +64,7 @@ class WriteComment extends Component {
       })
       .catch(e => {
         console.log(e);
-        alert("댓글 작성에 실패하였습니다");
+        alert(`${type === "comment" ? "댓글" : "답글"} 작성에 실패하였습니다`);
         this.setState({
           loading: false
         });
